@@ -1,32 +1,32 @@
-import axios from "axios";
+import { api } from "./api_config";
 
 async function getTrendingMovies(time){
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/trending/movie/${time}?api_key=${process.env.REACT_APP_API_KEY}`);
+    const res = await api.get(`/trending/movie/${time}`);
     return res.data.results;
 }
 
 async function getMovieDetails(id){
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/movie/${id}?language=en-US&api_key=${process.env.REACT_APP_API_KEY}`);
+    const res = await api.get(`/movie/${id}?language=en-US`);
     return res.data;
 }
 
 async function getUpcomingMovies(){
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/movie/upcoming?api_key=${process.env.REACT_APP_API_KEY}`);
+    const res = await api.get(`/movie/upcoming`);
     return res.data.results;
 }
 
 async function getNowPlayingMovies(){
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}`);
+    const res = await api.get(`/movie/now_playing`);
     return res.data.results;
 }
 
 async function getPopularMovies(){
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`);
+    const res = await api.get(`/movie/popular`);
     return res.data.results;
 }
 
 async function getTopRatedMovies(){
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}`);
+    const res = await api.get(`/movie/top_rated`);
     return res.data.results;
 }
 

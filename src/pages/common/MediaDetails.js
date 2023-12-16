@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getShowDetails } from "../../api/shows";
 import { getMovieDetails } from "../../api/movies";
 
-function MediaDetails() {
+function MediaDetails({isTV}) {
     const [loading, setLoading] = useState(true);
     const [mediaDetails, setMediaDetails] = useState(null);
 
-    const location = useLocation();
-    console.log(location);
+    const params = useParams();
 
     useEffect(() => {
-        if(location.state.isTV){
-            getShowDetails(location.state.id)
+        if(isTV){
+            getShowDetails(params.id)
             .then(data => {
                 setMediaDetails(data);
                 setLoading(false);
@@ -22,7 +21,7 @@ function MediaDetails() {
                 console.log(err);
             })
         }else{
-            getMovieDetails(location.state.id)
+            getMovieDetails(params.id)
             .then(data => {
                 setMediaDetails(data);
                 setLoading(false);
@@ -31,7 +30,7 @@ function MediaDetails() {
                 console.log(err);
             })
         }
-    }, [location]);
+    }, [isTV, params]);
 
     if(loading){
         return <div  className='progressbar'><CircularProgress/></div>;
@@ -45,10 +44,10 @@ function MediaDetails() {
             <section>
                 <div className="media-details-title">
                     <div className="media-details-title-item">
-                        <b><p>{location.state.isTV ? mediaDetails.name : mediaDetails.title}</p></b>
+                        <b><p>{isTV ? mediaDetails.name : mediaDetails.title}</p></b>
                     </div>
                     <div className="media-details-title-item">
-                        <p>({(location.state.isTV ? mediaDetails.first_air_date : mediaDetails.release_date).split('-')[0]})</p>
+                        <p>({(isTV ? mediaDetails.first_air_date : mediaDetails.release_date).split('-')[0]})</p>
                     </div>
                 </div>
                 <div className="media-details-genres">{genres}</div>
@@ -58,7 +57,6 @@ function MediaDetails() {
                     <p className="media-details-overview-content">{mediaDetails.overview}</p>
                 </div>
             </section>
-
         </div>;
     }
 }
