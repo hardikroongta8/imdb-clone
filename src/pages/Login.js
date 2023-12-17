@@ -12,7 +12,7 @@ function Login() {
         const requestToken = await createRequestToken();
 
         localStorage.setItem('requestToken', requestToken);
-        window.location.href = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=http://localhost:3000`;
+        window.location.href = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=${process.env.REACT_APP_REDIRECT_URL}`;
     }
 
     const handleClick2 = async() => {
